@@ -81,14 +81,41 @@ Or for Claude Desktop (`claude_desktop_config.json`):
 Add this to your project's `CLAUDE.md` to make Claude Code automatically use the knowledge base:
 
 ```markdown
-## Bug Knowledge Base (MCP: code-failures)
+# Global Preferences
 
-IMPORTANT: Before debugging ANY integration issue with CopilotKit, AG-UI,
-LangGraph, Starlette, FastAPI streaming, or SSE — ALWAYS call
-`search_past_bugs` first with the error message or symptom description.
+- Implement only what's explicitly requested. Prefer minimal changes. No unnecessary features, files, or abstractions.
+- Check all related functionality before modifying code — update or verify dependents.
+- Before writing a script, check what tools are available via MCP or plugins. Prefer existing tools over bash scripts.
+- Always use Context7 MCP (resolve-library-id → get-library-docs) before writing code involving external libraries or frameworks.
+- ALWAYS call `search_past_bugs` before debugging any error. Call `search_references` before writing integration code. These check your verified fixes first — prioritize over Context7 and web search.
+- After solving a bug that took >15 min: draft Symptom/Root Cause/Fix/Prevention, show me for review, then call `file_bug` to save it.
 
-Before writing integration code for these libraries, call `search_references`
-to get the canonical working pattern and version compatibility info.
+## Git Workflow
+
+- Commit after each logical unit of work with conventional commit messages (feat:, fix:, refactor:, chore:).
+- Do not push unless explicitly asked.
+- Work on feature branches, never commit directly to main.
+
+## Self-Improving Project CLAUDE.md
+
+When I correct you on something that represents a recurring pattern or architectural decision (not a one-off typo), propose an update to the project's CLAUDE.md. Follow these rules:
+
+**Before writing, check the existing file.** If a similar rule exists, replace or refine it — never duplicate. If the file exceeds 80 lines, identify a lower-value rule to remove before adding.
+
+**How to write rules:**
+1. Use absolute directives — start with NEVER or ALWAYS when appropriate
+2. Lead with why (1 sentence max), then the concrete rule
+3. Include actual commands or file:line references, not abstract descriptions
+4. One code example max per rule. No example if the rule is obvious
+5. Bullets over paragraphs. No "Warning Signs" sections for trivial rules
+
+**When to update:** Only for corrections that would apply to future sessions — patterns, conventions, architectural decisions, recurring tool preferences. Not for one-off fixes, typos, or task-specific context.
+
+**Two-tier structure:** If the project CLAUDE.md has a summary section at the top, add a one-line summary there and the detailed rule in the appropriate section below.
+
+If the correction is about a library bug or integration pattern (not project-specific), use `file_bug` or `file_reference` instead of updating CLAUDE.md.
+
+After proposing the update, wait for my approval before writing to the file.
 ```
 
 ## Test with MCP Inspector
