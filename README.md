@@ -26,14 +26,22 @@ npm run build
 
 ## Configure Claude Code
 
-### CLI (recommended)
+### CLI + Manual Config (recommended)
+
+The `claude mcp add` CLI doesn't support environment variables via flags, so you need to add the server first, then manually edit the config:
 
 ```bash
-# Global
-claude mcp add code-failures -e BRAIN_PATH=/Users/tk/Desktop/brain/code_failures -- node /Users/tk/Desktop/code-failures-mcp/dist/index.js
+# Step 1: Add the server (global)
+claude mcp add code-failures -- node /Users/tk/Desktop/code-failures-mcp/dist/index.js
 
-# Project-scoped
-claude mcp add -s project code-failures -e BRAIN_PATH=/Users/tk/Desktop/brain/code_failures -- node /Users/tk/Desktop/code-failures-mcp/dist/index.js
+# Step 2: Edit ~/.claude.json and add the env object to the code-failures server config:
+# "env": {
+#   "BRAIN_PATH": "/Users/tk/Desktop/brain/code_failures"
+# }
+
+# For project-scoped:
+claude mcp add -s project code-failures -- node /Users/tk/Desktop/code-failures-mcp/dist/index.js
+# Then edit the project's section in ~/.claude.json
 ```
 
 Verify with:
@@ -42,18 +50,23 @@ Verify with:
 claude mcp list
 ```
 
-### JSON config
+### JSON config (alternative)
 
-Add to `~/.claude/settings.json` (global) or `.claude/settings.json` (per-project):
+Manually add to `~/.claude.json` (find your project section):
 
 ```json
 {
-  "mcpServers": {
-    "code-failures": {
-      "command": "node",
-      "args": ["/Users/tk/Desktop/code-failures-mcp/dist/index.js"],
-      "env": {
-        "BRAIN_PATH": "/Users/tk/Desktop/brain/code_failures"
+  "projects": {
+    "/your/project/path": {
+      "mcpServers": {
+        "code-failures": {
+          "type": "stdio",
+          "command": "node",
+          "args": ["/Users/tk/Desktop/code-failures-mcp/dist/index.js"],
+          "env": {
+            "BRAIN_PATH": "/Users/tk/Desktop/brain/code_failures"
+          }
+        }
       }
     }
   }
