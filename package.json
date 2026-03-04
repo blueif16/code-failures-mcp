@@ -1,0 +1,25 @@
+{
+  "name": "code-failures-mcp",
+  "version": "1.0.0",
+  "description": "MCP server that indexes your code_failures knowledge base for Claude Code",
+  "type": "module",
+  "main": "dist/index.js",
+  "bin": {
+    "code-failures-mcp": "dist/index.js"
+  },
+  "scripts": {
+    "build": "npx tsc",
+    "dev": "npx tsc --watch",
+    "start": "node dist/index.js",
+    "inspect": "npx @modelcontextprotocol/inspector node dist/index.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.27.1",
+    "minisearch": "^7.1.2",
+    "zod": "^3.24.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.7.0"
+  }
+}

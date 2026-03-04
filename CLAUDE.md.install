@@ -1,0 +1,54 @@
+# Global Preferences
+
+- Implement only what's explicitly requested. Prefer minimal changes. No unnecessary features, files, or abstractions.
+- Check all related functionality before modifying code — update or verify dependents.
+- Before writing a script, check what tools are available via MCP or plugins. Prefer existing tools over bash scripts.
+- Always use Context7 MCP (resolve-library-id → get-library-docs) before writing code involving external libraries or frameworks.
+
+## Bug Knowledge Base (MCP: code-failures)
+
+ALWAYS search past bugs before debugging. The `code-failures` MCP indexes solved bugs with full Symptom → Root Cause → Fix chains.
+
+**When hitting an error or unexpected behavior:**
+1. Call `search_past_bugs` with the error message or symptom keywords FIRST
+2. If it's a library integration issue, also call `search_references` for the canonical working pattern
+3. Only start debugging from scratch if both return no results
+
+**Lookup priority for unfamiliar code:**
+1. `search_past_bugs` / `search_references` — your own verified experience
+2. Context7 MCP — current library docs
+3. Web search — community solutions (verify before trusting)
+
+**After solving a hard bug (>15 min debugging):**
+1. Draft the bug report: library, symptom, root cause, fix, prevention
+2. Show me the draft for review
+3. Call `file_bug` to save it to the knowledge base
+4. This makes the fix available to all future sessions automatically
+
+**After establishing a working integration pattern:**
+- Call `file_reference` to save canonical patterns, version matrices, or architecture notes
+
+## Git Workflow
+
+- Commit after each logical unit of work with conventional commit messages (feat:, fix:, refactor:, chore:).
+- Do not push unless explicitly asked.
+- Work on feature branches, never commit directly to main.
+
+## Self-Improving Project CLAUDE.md
+
+When I correct you on something that represents a recurring pattern or architectural decision (not a one-off typo), propose an update to the project's CLAUDE.md. Follow these rules:
+
+**Before writing, check the existing file.** If a similar rule exists, replace or refine it — never duplicate. If the file exceeds 80 lines, identify a lower-value rule to remove before adding.
+
+**How to write rules:**
+1. Use absolute directives — start with NEVER or ALWAYS when appropriate
+2. Lead with why (1 sentence max), then the concrete rule
+3. Include actual commands or file:line references, not abstract descriptions
+4. One code example max per rule. No example if the rule is obvious
+5. Bullets over paragraphs. No "Warning Signs" sections for trivial rules
+
+**When to update:** Only for corrections that would apply to future sessions — patterns, conventions, architectural decisions, recurring tool preferences. Not for one-off fixes, typos, or task-specific context.
+
+**Two-tier structure:** If the project CLAUDE.md has a summary section at the top, add a one-line summary there and the detailed rule in the appropriate section below.
+
+After proposing the update, wait for my approval before writing to the file.
