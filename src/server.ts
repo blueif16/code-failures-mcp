@@ -183,8 +183,11 @@ export async function createServer(brainPath: string) {
     }
   );
 
-  // ── Tool: search_all ───────────────────────────────────────────────────
+  // ── Tool: search_all (HIDDEN - kept for future use) ───────────────────
 
+  // Commented out to reduce exposed tool count
+  // Uncomment if you need cross-category search
+  /*
   server.tool(
     "search_all_knowledge",
     "Search across ALL documents (bugs + references) with relevance scoring. Use when you're not sure if something is a bug or a reference pattern.",
@@ -224,9 +227,13 @@ export async function createServer(brainPath: string) {
       };
     }
   );
+  */
 
-  // ── Tool: get_document ─────────────────────────────────────────────────
+  // ── Tool: get_document (HIDDEN - kept for future use) ─────────────────
 
+  // Commented out to reduce exposed tool count
+  // Search results already include full content for bugs/references
+  /*
   server.tool(
     "get_document",
     "Retrieve the full content of a specific document by its file path (as returned from search results).",
@@ -259,9 +266,13 @@ export async function createServer(brainPath: string) {
       return { content: [{ type: "text", text: formatReferenceResult(doc) }] };
     }
   );
+  */
 
-  // ── Tool: list_documents ───────────────────────────────────────────────
+  // ── Tool: list_documents (HIDDEN - kept for future use) ───────────────
 
+  // Commented out to reduce exposed tool count
+  // Search is more useful than browsing the full list
+  /*
   server.tool(
     "list_documents",
     "List all indexed documents in the knowledge base.",
@@ -300,6 +311,7 @@ export async function createServer(brainPath: string) {
       return { content: [{ type: "text", text: lines.join("\n") }] };
     }
   );
+  */
 
   // ── Tool: file_bug ──────────────────────────────────────────────────────
 
